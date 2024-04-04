@@ -12,6 +12,7 @@
             <table class="table mb-5">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>TItolo</th>
                         <th>Slug </th>
                         <th>Estratto</th>
@@ -20,6 +21,7 @@
                 <tbody>
                     @forelse ($projects as $project)
                         <tr>
+                            <td>{{ $project->id }}</td>
                             <td>{{ $project['title'] }}</td>
                             <td>{{ $project['slug'] }} </td>
                             <td>{{ $project->getAbstract(50) }}</td>
