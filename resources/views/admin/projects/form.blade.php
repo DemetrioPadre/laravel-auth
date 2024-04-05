@@ -5,7 +5,11 @@
     <section>
         <div class="container ">
 
-            @if ($errors->any())
+            <a href="{{ route('admin.project.index') }}" class="my-4 btn btn-primary"><i
+                    class="fa-solid fa-circle-left fa-beat"></i>
+                Torna alla Lista Dei Progetti</a>
+
+            {{-- @if ($errors->any())
                 <div class="alert alert-danger ">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -13,10 +17,7 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
-            <a href="{{ route('admin.project.index') }}" class="my-4 btn btn-primary"><i
-                    class="fa-solid fa-circle-left fa-beat"></i>
-                Torna alla Lista Dei Progetti</a>
+            @endif --}}
             <h1 class="mb-4">{{ empty($project->id) ? 'Creazione Nuovo Progetto' : 'Modifica Progetto' }}</h1>
 
             <form action="{{ empty($project->id) ? route('admin.project.store') : route('admin.project.update', $project) }}"
@@ -31,11 +32,18 @@
                 <div class="col-12">
                     <label class="form-label" for="title">Titolo</label>
                     <input class="form-control " id="title" name="title" type="text"
-                        value=" {{ $project->id }} : {{ $project->title }}">
+                        value=" {{ old('title') ?? $project['title'] }}  ">
+                    @error('title')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="col-12">
                     <label class="form-label" for="content">Contenuto</label>
-                    <textarea class="form-control " id="content" name="content" type="text" placeholder="Scrivi qua il Contenuto"> {{ $project->content }}</textarea>
+                    <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" type="text"
+                        placeholder="Scrivi qua il Contenuto">  {{ old('content') ?? $project['content'] }}</textarea>
+                    @error('content')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="col-12"> <button class="btn btn-success"> <i
                             class="fa-solid fa-floppy-disk me-1"></i>{{ empty($project->id) ? 'Salva' : 'Modifica' }}</button>

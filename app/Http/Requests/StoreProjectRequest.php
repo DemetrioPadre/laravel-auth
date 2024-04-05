@@ -38,7 +38,7 @@ class StoreProjectRequest extends FormRequest
         return [
             'title.required' => 'Il Titolo è obbligatorio',
             'title.string' => 'Il Titolo deve essere testuale',
-            'title.max' => 'Il Titolo può essere di {max} caratteri',
+            'title.max' => 'Il Titolo può essere di :max caratteri',
             'content.required' => 'Il Contenuto è obbligatorio',
             'content.string' => 'Il Content deve essere testuale',
         ];
