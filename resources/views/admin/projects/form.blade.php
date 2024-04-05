@@ -1,29 +1,45 @@
 @extends('layouts.app')
-@section('title', 'Modifica Progetti')
+@section('title', empty($project->id) ? 'Creazione Nuovo Progetto' : 'Modifica Progetto')
 
 @section('content')
     <section>
         <div class="container ">
 
+            @if ($errors->any())
+                <div class="alert alert-danger ">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <a href="{{ route('admin.project.index') }}" class="my-4 btn btn-primary"><i
                     class="fa-solid fa-circle-left fa-beat"></i>
                 Torna alla Lista Dei Progetti</a>
-            <h1 class="mb-4">Modifica Progetto</h1>
+            <h1 class="mb-4">{{ empty($project->id) ? 'Creazione Nuovo Progetto' : 'Modifica Progetto' }}</h1>
 
-            <form action="{{ route('admin.project.update', $project) }}" class="row g-3" method="POST">
-                @method('PATCH')
+            <form action="{{ empty($project->id) ? route('admin.project.store') : route('admin.project.update', $project) }}"
+                class="row g-3" method="POST">
+                @if (!empty($project->id))
+                    @method('PATCH')
+                @endif
+
                 @csrf
+
+
                 <div class="col-12">
                     <label class="form-label" for="title">Titolo</label>
                     <input class="form-control " id="title" name="title" type="text"
-                        value=" progetto n.{{ $project->id }} : {{ $project->title }}">
+                        value=" {{ $project->id }} : {{ $project->title }}">
                 </div>
                 <div class="col-12">
                     <label class="form-label" for="content">Contenuto</label>
                     <textarea class="form-control " id="content" name="content" type="text" placeholder="Scrivi qua il Contenuto"> {{ $project->content }}</textarea>
                 </div>
                 <div class="col-12"> <button class="btn btn-success"> <i
-                            class="fa-solid fa-floppy-disk me-1"></i>Modifica</button></div>
+                            class="fa-solid fa-floppy-disk me-1"></i>{{ empty($project->id) ? 'Salva' : 'Modifica' }}</button>
+                </div>
 
             </form>
         </div>
